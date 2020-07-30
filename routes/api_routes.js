@@ -1,7 +1,5 @@
 const Workout = require("../models/Workout");
 
-// Basic structure in place, go route by route and rework for workouts.
-
 module.exports = function (app) {
 
     app.get("/api/workouts/range", (req, res) => {
@@ -17,7 +15,8 @@ module.exports = function (app) {
 
     app.post("/api/workouts", ({ body }, res) => {
         console.log("[API] Creating new workout");
-        Workout.create(body)
+        const workout = new Workout(body);
+        Workout.create(workout)
             .then(dbWorkout => {
                 res.json(dbWorkout);
             })
@@ -26,9 +25,12 @@ module.exports = function (app) {
             });
     });
 
-    app.put("/api/workouts/:id", ({ body }, res) => {
-        console.log("[API] Creating new workout");
-        Workout.create(body)
+    app.put("/api/workouts/:id", (req, res) => {
+        console.log("[API] Updating workout");
+        Workout.findOneAndUpdate(
+            { _id: req.params.id }, 
+            { $push: { exercises: req.body } }
+        )
             .then(dbWorkout => {
                 res.json(dbWorkout);
             })
@@ -36,15 +38,4 @@ module.exports = function (app) {
                 res.json(err);
             });
     });
-
-    // app.get("/populated", (req, res) => {
-    //     db.Library.find({})
-    //         .populate("books")
-    //         .then(dbLibrary => {
-    //             res.json(dbLibrary);
-    //         })
-    //         .catch(err => {
-    //             res.json(err);
-    //         });
-    // });
 }
