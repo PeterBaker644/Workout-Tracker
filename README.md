@@ -3,7 +3,7 @@
 [![Generic badge](https://img.shields.io/badge/license-MIT-green.svg)](https://shields.io/) 
 
 A web app for tracking workouts. Uses a Mongo database and Mongoose schema.
-[Test the Application Here](https://peterbaker644.github.io/Weather-Application/)
+[Test the Application Here](https://fast-plateau-00094.herokuapp.com/)
 
 ## User Story
 
